@@ -1,0 +1,7 @@
+/bin/
+
+\.idea/
+
+out/
+
+data/file\.bin
