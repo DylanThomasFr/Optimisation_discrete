@@ -1,13 +1,13 @@
 import io.Parser;
-
-import java.io.IOException;
+import utils.Board;
 
 public class Main {
 
     public static void main(String[] args) {
         try {
-            Parser.createBoard("data/tai12a.dat");
-        } catch (IOException e) {
+            Board board = Parser.createBoard("data/tai12a.dat");
+            System.out.println("board = " + board);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
