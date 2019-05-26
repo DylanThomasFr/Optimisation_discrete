@@ -24,12 +24,37 @@ public class Order {
         }
     }
 
-    public Integer get(Integer i){
-        return orders[i];
+    public Order(Integer[] orders){
+        SIZE = orders.length;
+        this.orders = orders.clone();
+    }
+
+    public int size(){
+        return SIZE;
+    }
+
+    public Integer get(Integer index){
+        assert (index > 0);
+        assert (index < this.SIZE);
+        return orders[index];
+    }
+
+    public Order set(Integer index, Integer value){
+        assert (index > 0);
+        assert (index < this.SIZE);
+        assert (value > 0);
+        assert (value < this.SIZE);
+        orders[index] = value;
+        return this;
     }
 
     @Override
     public String toString() {
         return Arrays.toString(orders);
+    }
+
+    @Override
+    public Order clone() {
+        return new Order(this.orders);
     }
 }

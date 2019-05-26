@@ -30,8 +30,8 @@ public class Board {
         return weights[a][b];
     }
 
-    public Integer computeFitness(Order order){
-        int sum = 0;
+    public long computeFitness(Order order){
+        long sum = 0L;
         for (int i = 0; i < SIZE; i++) {
             for (int j = i; j < SIZE; j++) {
                 sum += weights[i][j]*distance[order.get(i)][order.get(j)];
