@@ -10,10 +10,10 @@ public class Board {
     private final Integer[][] distance;
     private final Integer[][] weights;
 
-    public Board(Integer size, Integer[][] distance, Integer[][] weights){
+    public Board(Integer size, Integer[][] weights, Integer[][] distance){
         this.SIZE = size;
-        this.distance = distance;
         this.weights = weights;
+        this.distance = distance;
     }
 
     public Integer getSIZE(){
