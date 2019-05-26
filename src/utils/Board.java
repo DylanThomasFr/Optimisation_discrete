@@ -30,7 +30,7 @@ public class Board {
         return weights[a][b];
     }
 
-    public Integer computeSum(Order order){
+    public Integer computeFitness(Order order){
         int sum = 0;
         for (int i = 0; i < SIZE; i++) {
             for (int j = i; j < SIZE; j++) {
