@@ -4,6 +4,17 @@
 
 **1. Décrire les instances de Taillard (taille de 12 à 100)**
 
+Les instances de taillard utilisée ici sont formatées en 3 parties
+-   la dimension `n`, comprise en 12 et 100
+-   une matrice ``n^2`` décrivant les poids entre les équipements, notée ``w(a,b)``
+-   une matrie ``n^2`` décrivant les distances entre les emplacements, notée ``d(a,b)``
+
+On cherche une bijection notée ``f`` de ``n`` dans ``n``, de permutation qui minimiserait la fonction suivante :
+
+![](image/formuleF.PNG)
+
+Il est a prendre en compte qu'ici les matrices utilisées sont symétriques.
+
 **2. Expliquer et décrire les voisinages utilisés**
 
 **3. Implémenter le recuit simulé et la méthode Tabu**
