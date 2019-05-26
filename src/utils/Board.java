@@ -1,7 +1,9 @@
 package utils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 public class Board {
@@ -26,6 +28,16 @@ public class Board {
 
     public Integer getW(Integer a, Integer b){
         return weights[a][b];
+    }
+
+    public Integer computeSum(LinkedList<Integer> order){
+        int sum = 0;
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = i; j < SIZE; j++) {
+                sum += weights[i][j]*distance[order.get(i)][order.get(j)];
+            }
+        }
+        return sum;
     }
 
     @Override
