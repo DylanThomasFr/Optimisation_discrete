@@ -1,14 +1,14 @@
 package algo;
 
-import utils.Board;
+import utils.Landscape;
 import utils.Order;
 
 public interface IAlgo {
 
     /**
      * Compute the Algo
-     * @param board
+     * @param landscape
      * @return Best solution found
      */
-    Order compute(Board board);
+    Order compute(Landscape landscape);
 }

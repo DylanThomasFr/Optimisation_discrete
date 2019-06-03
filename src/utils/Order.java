@@ -1,6 +1,8 @@
 package utils;
 
 import java.util.Arrays;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Order {
 
@@ -45,6 +47,19 @@ public class Order {
         assert (value > 0);
         assert (value < this.SIZE);
         orders[index] = value;
+        return this;
+    }
+
+    public Order shuffle(){
+        Random rnd = ThreadLocalRandom.current();
+        for (int i = orders.length - 1; i > 0; i--)
+        {
+            int index = rnd.nextInt(i + 1);
+            // Simple swap
+            int a = orders[index];
+            orders[index] = orders[i];
+            orders[i] = a;
+        }
         return this;
     }
 
