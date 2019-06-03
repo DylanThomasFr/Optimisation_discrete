@@ -1,12 +1,12 @@
 package algo;
 
-import utils.Board;
+import utils.Landscape;
 import utils.Order;
 
 public class TabuSearch implements IAlgo {
 
     @Override
-    public Order compute(Board board) {
+    public Order compute(Landscape landscape) {
         return null; //TODO
     }
 }

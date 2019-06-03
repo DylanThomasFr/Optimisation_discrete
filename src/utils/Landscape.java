@@ -1,18 +1,12 @@
 package utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.stream.Collectors;
-
-public class Board {
+public class Landscape {
 
     private final Integer SIZE;
     private final Integer[][] distance;
     private final Integer[][] weights;
 
-    public Board(Integer size, Integer[][] weights, Integer[][] distance){
+    public Landscape(Integer size, Integer[][] weights, Integer[][] distance){
         this.SIZE = size;
         this.weights = weights;
         this.distance = distance;
@@ -37,13 +31,13 @@ public class Board {
                 sum += weights[i][j]*distance[order.get(i)][order.get(j)];
             }
         }
-        return sum;
+        return 2*sum;
     }
 
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("- Board -\r\n")
+        stringBuilder.append("- Landscape -\r\n")
                 .append("size : ").append(SIZE).append("\r\n")
                 .append("Distance : \r\n");
         for (Integer[] integers : distance) {

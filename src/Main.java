@@ -1,32 +1,39 @@
+import algo.HillClimbing;
 import algo.RandomWalk;
 import io.Parser;
-import utils.Board;
+import utils.Landscape;
 import utils.Order;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        Board board = Parser.createBoard("data/tai12a.dat");
+        Landscape landscape = Parser.createLandscape("data/tai12a.dat");
 
-        Order solutionOrder = new Order("8,1,6,2,11,10,3,5,9,7,12,4");
+//        Order solutionOrder = new Order("8,1,6,2,11,10,3,5,9,7,12,4");
 
-        long bestSolutionFitness = board.computeFitness(solutionOrder);
-        System.out.println("bestSolutionFitness = " + bestSolutionFitness);
+//        long bestSolutionFitness = landscape.computeFitness(solutionOrder);
+//        System.out.println("bestSolutionFitness = " + bestSolutionFitness);
 
-        RandomWalk randomWalk = new RandomWalk();
-        Order bestComputedOrder = randomWalk.compute(board);
+//        RandomWalk randomWalk = new RandomWalk(1000);
+//        Order bestComputedOrder = randomWalk.compute(landscape);
+//        System.out.println("bestComputedOrder = " + bestComputedOrder);
+//        long bestComputedFitness = landscape.computeFitness(bestComputedOrder);
+//        System.out.println("bestComputedFitness = " + bestComputedFitness);
+
+        HillClimbing hillClimbing = new HillClimbing(10000);
+        Order bestComputedOrder = hillClimbing.compute(landscape);
         System.out.println("bestComputedOrder = " + bestComputedOrder);
-        long bestComputedFitness = board.computeFitness(bestComputedOrder);
+        long bestComputedFitness = landscape.computeFitness(bestComputedOrder);
         System.out.println("bestComputedFitness = " + bestComputedFitness);
 
 //        int i = 1000000;
 //        int newValue;
 //        while(i-- > 0){
 //            Collections.shuffle(order);
-//            newValue = board.computeFitness(order);
+//            newValue = landscape.computeFitness(order);
 //            if(newValue < best)
 //                System.out.println("newValue = " + newValue);
-////            System.out.println("board.computeFitness() = " + newValue + " " + (newValue < best));
+////            System.out.println("landscape.computeFitness() = " + newValue + " " + (newValue < best));
 //        }
     }
 }
