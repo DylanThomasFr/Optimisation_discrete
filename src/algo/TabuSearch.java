@@ -9,6 +9,7 @@ import utils.Order;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Queue;
 
 public class TabuSearch implements IAlgo {
@@ -17,7 +18,7 @@ public class TabuSearch implements IAlgo {
     private final int tabouSize;
     private IMapping mapping;
 
-    public TabuSearch(IMapping mapping, int maxSteps, final int tabouSize){
+    public TabuSearch(IMapping mapping, final int maxSteps, final int tabouSize){
         this.mapping = mapping;
         this.maxSteps = maxSteps;
         this.tabouSize = tabouSize;
@@ -76,5 +77,19 @@ public class TabuSearch implements IAlgo {
     public IAlgo setMappingStrategy(IMapping mapping) {
         this.mapping = mapping;
         return this;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                mapping,
+                maxSteps,
+                tabouSize
+        );
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj.hashCode() == this.hashCode();
     }
 }

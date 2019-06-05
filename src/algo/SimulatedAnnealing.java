@@ -6,6 +6,7 @@ import utils.Landscape;
 import utils.Order;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class SimulatedAnnealing implements IAlgo {
@@ -96,5 +97,20 @@ public class SimulatedAnnealing implements IAlgo {
 
     private int getTemperatureChanges(final float deltaFitness, float temperature0, final double proba){
         return (int) (Math.log(-deltaFitness / (temperature0 * Math.log(proba))) / Math.log(mu)) + 1;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                mapping,
+                mu,
+                movesByTemperature,
+                initialSolution
+        );
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj.hashCode() == this.hashCode();
     }
 }

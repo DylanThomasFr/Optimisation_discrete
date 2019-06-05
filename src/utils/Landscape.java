@@ -1,5 +1,7 @@
 package utils;
 
+import java.util.Objects;
+
 public class Landscape {
 
     private final Integer SIZE;
@@ -8,8 +10,8 @@ public class Landscape {
 
     public Landscape(Integer size, Integer[][] weights, Integer[][] distance){
         this.SIZE = size;
-        this.weights = weights;
-        this.distance = distance;
+        this.weights = weights.clone();
+        this.distance = distance.clone();
     }
 
     public Integer getSIZE(){
@@ -54,5 +56,24 @@ public class Landscape {
             stringBuilder.append("\r\n");
         }
         return stringBuilder.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                SIZE,
+                weights,
+                distance
+        );
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj.hashCode() == this.hashCode();
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return new Landscape(SIZE, weights, distance);
     }
 }

@@ -14,4 +14,8 @@ public interface IAlgo {
     Order compute(Landscape landscape);
 
     IAlgo setMappingStrategy(IMapping iMapping);
+
+    int hashCode();
+
+    boolean equals(Object obj);
 }

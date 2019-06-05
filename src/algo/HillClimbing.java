@@ -4,15 +4,16 @@ import algo.mapping.IMapping;
 import utils.Landscape;
 import utils.Order;
 
+import java.util.Objects;
 import java.util.Random;
 
 public class HillClimbing implements IAlgo {
 
     private Random rand = new Random();
-    private int numberOfIterations;
+    private final int numberOfIterations;
     private IMapping mapping;
 
-    public HillClimbing(IMapping mapping, int numberOfIterations){
+    public HillClimbing(IMapping mapping, final int numberOfIterations){
         this.mapping = mapping;
         this.numberOfIterations = numberOfIterations;
     }
@@ -23,10 +24,11 @@ public class HillClimbing implements IAlgo {
 
     @Override
     public Order compute(Landscape landscape) {
-        if(numberOfIterations == 0){
-            numberOfIterations = 2 * landscape.getSIZE() * landscape.getSIZE();
+        int numberOfIterationsToRun = numberOfIterations;
+        if(numberOfIterationsToRun == 0){
+            numberOfIterationsToRun = 2 * landscape.getSIZE() * landscape.getSIZE();
         } else {
-            if(numberOfIterations > landscape.getSIZE() * landscape.getSIZE())
+            if(numberOfIterationsToRun > landscape.getSIZE() * landscape.getSIZE())
                 System.out.printf(
                         "numberOfIterations very big : %d/%d%n",
                         numberOfIterations,
@@ -38,7 +40,7 @@ public class HillClimbing implements IAlgo {
         Order randomSolution = new Order(landscape.getSIZE());
 
         long bestFitness = Long.MAX_VALUE;
-        for (int i = 0; i < numberOfIterations; i++) {
+        for (int i = 0; i < numberOfIterationsToRun; i++) {
             bestLocalSolution = hillClimbingAlgo(landscape, randomSolution.shuffle());
             long fitness = landscape.computeFitness(bestLocalSolution);
             if(fitness < bestFitness){
@@ -73,5 +75,18 @@ public class HillClimbing implements IAlgo {
     public IAlgo setMappingStrategy(IMapping mapping) {
         this.mapping = mapping;
         return this;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                mapping,
+                numberOfIterations
+        );
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj.hashCode() == this.hashCode();
     }
 }

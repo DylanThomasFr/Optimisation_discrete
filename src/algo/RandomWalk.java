@@ -5,6 +5,7 @@ import utils.Landscape;
 import utils.Order;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class RandomWalk implements IAlgo {
@@ -41,5 +42,18 @@ public class RandomWalk implements IAlgo {
     public IAlgo setMappingStrategy(IMapping mapping) {
         this.mapping = mapping;
         return this;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                mapping,
+                numberOfIterations
+        );
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj.hashCode() == this.hashCode();
     }
 }
