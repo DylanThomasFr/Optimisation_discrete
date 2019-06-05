@@ -37,7 +37,6 @@ public class TabuSearch implements IAlgo {
         List<Pair<Order, IOperation>> neighbors;
         for (int i = 0; i < maxSteps; i++) {
             neighbors = mapping.getNeighborsExceptOperations(currentSolution, (List) tabouList);
-            System.out.println("neighbors.size() = " + neighbors.size());
             long newBestFitness = Long.MAX_VALUE;
             Order newBestSolution = currentSolution.clone();
             IOperation reverseOperation = new ONoChangeOperation();
@@ -53,8 +52,6 @@ public class TabuSearch implements IAlgo {
             long currentFitness = landscape.computeFitness(currentSolution);
             long deltaFitness = newBestFitness - currentFitness;
             if(deltaFitness >= 0){
-                System.out.println("deltaFitness = " + deltaFitness);
-                System.out.println("reverseOperation = " + reverseOperation);
                 tabouListAdd(reverseOperation,tabouList);
             }
             if(newBestFitness < bestFitness){
@@ -67,14 +64,10 @@ public class TabuSearch implements IAlgo {
     }
 
     private void tabouListAdd(IOperation iOperation, Queue<IOperation> tabouList){
-        System.out.println("BEFORE tabouList = " + tabouList);
-        if(tabouList.contains(iOperation)) {
+        if(tabouList.contains(iOperation))
             return;
-        }
-        if(tabouList.size() >= tabouSize) {
+        if(tabouList.size() >= tabouSize)
             tabouList.poll();
-        }
         tabouList.add(iOperation);
-        System.out.println("AFTER tabouList = " + tabouList);
     }
 }

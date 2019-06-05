@@ -40,9 +40,9 @@ public class MPermutation implements IMapping{
         for(int i=0; i<order.size(); i++){
             for(int j=i+1; j<order.size(); j++){
                 OPermutation oPermutation = new OPermutation(i,j);
-                System.out.println("oPermutation = " + oPermutation);
-                if(exceptOperations.contains(oPermutation)){
-                    System.out.println("Found excepted");
+                if(
+                        exceptOperations.contains(oPermutation) ||
+                        exceptOperations.contains(oPermutation.getReverseOperation())){
                     continue;
                 }
                 neighbors.add(new Pair<>(oPermutation.applyOperation(order), oPermutation));

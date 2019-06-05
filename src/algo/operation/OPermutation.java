@@ -35,11 +35,18 @@ public class OPermutation implements IOperation {
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-                "Permutation",
-                a,
-                b
-        );
+        if(a<b)
+            return Objects.hash(
+                    "Permutation",
+                    a,
+                    b
+            );
+        else
+            return Objects.hash(
+                    "Permutation",
+                    b,
+                    a
+            );
     }
 
     @Override
