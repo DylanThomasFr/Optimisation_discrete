@@ -10,17 +10,28 @@ import java.util.Random;
 public class HillClimbing implements IAlgo {
 
     private Random rand = new Random();
-    private final int numberOfIterations;
+    private int numberOfIterations;
     private MPermutation mapping = new MPermutation();
 
     public HillClimbing(int numberOfIterations){
         this.numberOfIterations = numberOfIterations;
     }
 
+    public HillClimbing(){
+        this.numberOfIterations = 0;
+    }
+
     @Override
     public Order compute(Landscape landscape) {
-        if(numberOfIterations > landscape.getSIZE() * landscape.getSIZE())
-            System.out.println("numberOfIterations very big");
+        if(numberOfIterations == 0){
+            numberOfIterations = 2 * landscape.getSIZE() * landscape.getSIZE();
+        } else {
+            if(numberOfIterations > landscape.getSIZE() * landscape.getSIZE())
+                System.out.printf(
+                        "numberOfIterations very big : %d/%d%n",
+                        numberOfIterations,
+                        landscape.getSIZE() * landscape.getSIZE());
+        }
         Order solution = new Order(landscape.getSIZE());
         Order bestSolution = solution.clone();
         Order bestLocalSolution;
