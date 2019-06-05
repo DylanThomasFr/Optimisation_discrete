@@ -11,14 +11,22 @@ public class Parser {
         String content = clearSpaces(
                 new String(Files.readAllBytes(Paths.get(url)))
         );
-        String[] parts = content.split("\r\n\r\n");
-        if(parts.length < 3)
-            throw new Exception("Bad format file");
-        Integer size = Integer.parseInt(parts[0].replaceAll(" ", ""));
+        String part1 = "";
+        String part2 = "";
+        int size = 0;
+
+        String[] parts =  content.replaceAll("\r\n\r\n", "\r\n").split("\r\n");
+        size = Integer.parseInt(parts[0].replaceAll(" ", ""));
+        for (int i = 1; i < size + 1; i++) {
+            part1 += parts[i] + "\r\n";
+        }
+        for (int i = 1 + size; i < 2 * size + 1; i++) {
+            part2 += parts[i] + "\r\n";
+        }
         return new Landscape(
                 size,
-                formatArray(size, parts[1]),
-                formatArray(size, parts[2])
+                formatArray(size, part1),
+                formatArray(size, part2)
         );
     }
 
