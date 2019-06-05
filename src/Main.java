@@ -15,8 +15,8 @@ public class Main {
         MPermutation mapping = new MPermutation();
 
         Benchmark benchmark = new Benchmark(2, 4);
-        benchmark.registerLandscape(Parser.createLandscape("data/tai12a.dat").setBestFitness(224416L));
-        benchmark.registerLandscape(Parser.createLandscape("data/tai20a.dat").setBestFitness(703482L));
+        benchmark.registerLandscape(Parser.createLandscape("data","tai12a.dat").setBestFitness(224416L));
+        benchmark.registerLandscape(Parser.createLandscape("data","tai20a.dat").setBestFitness(703482L));
         for (int i = 1; i < 100000; i *= 2) {
             benchmark.registerAlgo(new RandomWalk(mapping, i));
         }

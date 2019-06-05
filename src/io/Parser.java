@@ -7,9 +7,9 @@ import java.nio.file.Paths;
 
 public class Parser {
 
-    public static Landscape createLandscape(String url) throws Exception {
+    public static Landscape createLandscape(String filepath, String filename) throws Exception {
         String content = clearSpaces(
-                new String(Files.readAllBytes(Paths.get(url)))
+                new String(Files.readAllBytes(Paths.get(filepath + "/" + filename)))
         );
         String part1 = "";
         String part2 = "";
@@ -24,7 +24,7 @@ public class Parser {
             part2 += parts[i] + "\r\n";
         }
         return new Landscape(
-                url,
+                filename,
                 size,
                 formatArray(size, part1),
                 formatArray(size, part2)
