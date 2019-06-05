@@ -30,6 +30,7 @@ public class TabuSearch implements IAlgo {
     }
 
     public Order compute(Landscape landscape, Order initialSolution){
+        System.out.println("Compute "+this.toString());
         Order bestSolution = initialSolution.clone();
         long bestFitness = landscape.computeFitness(bestSolution);
 

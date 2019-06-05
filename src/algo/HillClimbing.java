@@ -24,6 +24,7 @@ public class HillClimbing implements IAlgo {
 
     @Override
     public Order compute(Landscape landscape) {
+        System.out.println("Compute "+this.toString());
         int numberOfIterationsToRun = numberOfIterations;
         if(numberOfIterationsToRun == 0){
             numberOfIterationsToRun = 2 * landscape.getSIZE() * landscape.getSIZE();

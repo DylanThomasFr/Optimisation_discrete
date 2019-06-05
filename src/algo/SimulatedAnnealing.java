@@ -31,6 +31,7 @@ public class SimulatedAnnealing implements IAlgo {
 
     @Override
     public Order compute(Landscape landscape) {
+        System.out.println("Compute "+this.toString());
         Order currentSolution;
         if(initialSolution == null){
             currentSolution = new Order(landscape.getSIZE());
