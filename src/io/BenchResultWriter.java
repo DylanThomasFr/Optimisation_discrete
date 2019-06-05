@@ -10,21 +10,17 @@ import java.util.List;
 public class BenchResultWriter {
 
     private final String folderpath;
-    private final String algo;
-    private final String landscape;
-
     private final Path path;
+    private final String filename;
 
     public BenchResultWriter(
             final String folderpath,
-            final String algo,
-            final String landscape
+            final String filename
             ){
         this.folderpath = folderpath;
-        this.algo = algo;
-        this.landscape = landscape;
 
-        path = Paths.get(folderpath + "/" + algo + "_" + landscape + ".txt");
+        path = Paths.get(folderpath + "/" + filename + ".csv");
+        this.filename = filename;
     }
 
     public BenchResultWriter write(List<String> lines){

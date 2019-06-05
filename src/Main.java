@@ -4,6 +4,7 @@ import algo.SimulatedAnnealing;
 import algo.TabuSearch;
 import algo.mapping.MPermutation;
 import benchmark.Benchmark;
+import io.BenchResultWriter;
 import io.Parser;
 import utils.Landscape;
 import utils.Order;
@@ -14,7 +15,7 @@ public class Main {
 
         MPermutation mapping = new MPermutation();
 
-        Benchmark benchmark = new Benchmark(2, 4);
+        Benchmark benchmark = new Benchmark(2, 10);
         benchmark.registerLandscape(Parser.createLandscape("data","tai12a.dat").setBestFitness(224416L));
         benchmark.registerLandscape(Parser.createLandscape("data","tai20a.dat").setBestFitness(703482L));
         for (int i = 1; i < 100000; i *= 2) {
@@ -23,7 +24,11 @@ public class Main {
         for (int i = 1; i < 145; i += 1) {
             benchmark.registerAlgo(new HillClimbing(mapping, i));
         }
+
+        BenchResultWriter benchResultWriter = new BenchResultWriter("out", "test2");
+
         benchmark.runBench();
+        benchmark.writeOut(benchResultWriter);
 
 
 
