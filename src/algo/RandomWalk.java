@@ -1,7 +1,7 @@
 package algo;
 
 import algo.mapping.MPermutation;
-import utils.Board;
+import utils.Landscape;
 import utils.Order;
 
 import java.util.List;
@@ -9,13 +9,17 @@ import java.util.Random;
 
 public class RandomWalk implements IAlgo {
 
-    Random rand = new Random();
-    int numberOfIterations = 1000000;
-    MPermutation mapping = new MPermutation();
+    private Random rand = new Random();
+    private final int numberOfIterations;
+    private MPermutation mapping = new MPermutation();
+
+    public RandomWalk(final int numberOfIterations){
+        this.numberOfIterations = numberOfIterations;
+    }
 
     @Override
-    public Order compute(Board board) {
-        Order solution = new Order(board.getSIZE());
+    public Order compute(Landscape landscape) {
+        Order solution = new Order(landscape.getSIZE());
         Order bestSolution = solution.clone();
 
         long bestFitness = Long.MAX_VALUE;
@@ -23,7 +27,7 @@ public class RandomWalk implements IAlgo {
             List<Order> neighbors = mapping.getNeighbors(solution);
             int pickedOne = rand .nextInt(neighbors.size());
             solution = neighbors.get(pickedOne).clone();
-            long fitness = board.computeFitness(solution);
+            long fitness = landscape.computeFitness(solution);
             if(fitness < bestFitness){
                 bestSolution = solution.clone();
                 bestFitness = fitness;

@@ -1,13 +1,13 @@
 package io;
 
-import utils.Board;
+import utils.Landscape;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class Parser {
 
-    public static Board createBoard(String url) throws Exception {
+    public static Landscape createLandscape(String url) throws Exception {
         String content = clearSpaces(
                 new String(Files.readAllBytes(Paths.get(url)))
         );
@@ -15,7 +15,7 @@ public class Parser {
         if(parts.length < 3)
             throw new Exception("Bad format file");
         Integer size = Integer.parseInt(parts[0].replaceAll(" ", ""));
-        return new Board(
+        return new Landscape(
                 size,
                 formatArray(size, parts[1]),
                 formatArray(size, parts[2])

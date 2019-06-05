@@ -14,4 +14,10 @@ public interface IOperation {
      * @return The operation to reverse the one already applyed
      */
     IOperation getReverseOperation();
+
+    int hashCode();
+
+    boolean equals(Object obj);
+
+    String toString();
 }
