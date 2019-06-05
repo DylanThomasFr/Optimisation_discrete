@@ -100,8 +100,17 @@ public class SimulatedAnnealing implements IAlgo {
     }
 
     @Override
+    public String toString() {
+        return "SimulatedAnnealing."+mapping+
+                ".mu."+mu+
+                ".movesByTemperature."+movesByTemperature+
+                ".initialSolution."+(initialSolution == null ? "false" : "true");
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(
+                "SimulatedAnnealing",
                 mapping,
                 mu,
                 movesByTemperature,

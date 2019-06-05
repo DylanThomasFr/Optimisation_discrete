@@ -80,8 +80,16 @@ public class TabuSearch implements IAlgo {
     }
 
     @Override
+    public String toString() {
+        return "TabuSearch."+mapping+
+                ".maxSteps."+maxSteps+
+                ".tabouSize."+tabouSize;
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(
+                "TabuSearch",
                 mapping,
                 maxSteps,
                 tabouSize

@@ -45,8 +45,15 @@ public class RandomWalk implements IAlgo {
     }
 
     @Override
+    public String toString() {
+        return "RandomWalk."+mapping+
+                ".numberOfIterations."+numberOfIterations;
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(
+                "RandomWalk",
                 mapping,
                 numberOfIterations
         );

@@ -7,6 +7,7 @@ import utils.Order;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MNoChangeOperation implements IMapping {
 
@@ -32,5 +33,22 @@ public class MNoChangeOperation implements IMapping {
     @Override
     public List<Pair<Order, IOperation>> getNeighborsExceptOperations(Order order, List<IOperation> exceptOperations) {
         return getNeighborsOperations(order);
+    }
+
+    @Override
+    public String toString() {
+        return "MNoChangeOperation";
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                toString()
+        );
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj.hashCode() == this.hashCode();
     }
 }

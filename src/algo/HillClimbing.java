@@ -78,8 +78,15 @@ public class HillClimbing implements IAlgo {
     }
 
     @Override
+    public String toString() {
+        return "HillClimbing." + mapping+
+                ".numberOfIterations."+numberOfIterations;
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(
+                "HillClimbing",
                 mapping,
                 numberOfIterations
         );
