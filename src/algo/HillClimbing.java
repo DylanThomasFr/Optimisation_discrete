@@ -74,8 +74,8 @@ public class HillClimbing implements IAlgo {
 
     @Override
     public String toString() {
-        return "HillClimbing." + mapping+
-                ".numberOfIterations."+numberOfIterations;
+        return "HillClimbing," + mapping+
+                ",numberOfIterations,"+numberOfIterations;
     }
 
     @Override

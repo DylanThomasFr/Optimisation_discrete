@@ -2,6 +2,7 @@ package benchmark;
 
 import algo.IAlgo;
 import algo.mapping.IMapping;
+import io.BenchResultWriter;
 import javafx.util.Pair;
 import utils.Landscape;
 
@@ -23,7 +24,6 @@ public class Benchmark {
     public Benchmark(final int threadNb, final int avgIter){
         this.threadNb = threadNb;
         this.avgIter = avgIter;
-//        returnFirtness = new LinkedBlockingQueue<>();
         landscapes = new HashSet<>();
         algos = new HashSet<>();
         results = new HashMap<>();
@@ -60,6 +60,17 @@ public class Benchmark {
                 System.out.println("results("+lanscape.getName()+")("+algo+") " + results.get(lanscape).get(algo));
             }
         }
+    }
+
+    public Benchmark writeOut(BenchResultWriter benchResultWriter){
+        List<String> lines = new ArrayList<>();
+        for (Landscape lanscape : landscapes) {
+            for (IAlgo algo : algos) {
+                lines.add(lanscape.getName()+","+algo+","+results.get(lanscape).get(algo));
+            }
+        }
+        benchResultWriter.write(lines);
+        return this;
     }
 
     private List<BenchJob> getBenchJobs(){

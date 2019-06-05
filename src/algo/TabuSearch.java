@@ -76,9 +76,9 @@ public class TabuSearch implements IAlgo {
 
     @Override
     public String toString() {
-        return "TabuSearch."+mapping+
-                ".maxSteps."+maxSteps+
-                ".tabouSize."+tabouSize;
+        return "TabuSearch,"+mapping+
+                ",maxSteps,"+maxSteps+
+                ",tabouSize,"+tabouSize;
     }
 
     @Override
