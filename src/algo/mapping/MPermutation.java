@@ -7,6 +7,7 @@ import utils.Order;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MPermutation implements IMapping{
 
@@ -51,14 +52,20 @@ public class MPermutation implements IMapping{
         return neighbors;
     }
 
-//    @Override
-//    public List<IOperation> getOperations(final Order order) {
-//        ArrayList<IOperation> operations =new ArrayList<>();
-//        for(int i=0; i<order.size(); i++){
-//            for(int j=i+1; j<order.size(); j++){
-//                operations.add(new OPermutation(i,j));
-//            }
-//        }
-//        return operations;
-//    }
+    @Override
+    public String toString() {
+        return "MPermutation";
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                toString()
+        );
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj.hashCode() == this.hashCode();
+    }
 }

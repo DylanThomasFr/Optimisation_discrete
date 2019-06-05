@@ -1,15 +1,30 @@
 package utils;
 
+import java.util.Objects;
+
 public class Landscape {
 
+    private final String name;
     private final Integer SIZE;
     private final Integer[][] distance;
     private final Integer[][] weights;
 
-    public Landscape(Integer size, Integer[][] weights, Integer[][] distance){
+    private long bestFitness = 0;
+
+    public Landscape(String name, Integer size, Integer[][] weights, Integer[][] distance){
+        this.name = name;
         this.SIZE = size;
-        this.weights = weights;
-        this.distance = distance;
+        this.weights = weights.clone();
+        this.distance = distance.clone();
+    }
+
+    public Landscape setBestFitness(long bestFitness) {
+        this.bestFitness = bestFitness;
+        return this;
+    }
+
+    public long getBestFitness() {
+        return bestFitness;
     }
 
     public Integer getSIZE(){
@@ -54,5 +69,28 @@ public class Landscape {
             stringBuilder.append("\r\n");
         }
         return stringBuilder.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                SIZE,
+                weights,
+                distance
+        );
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj.hashCode() == this.hashCode();
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return new Landscape(name, SIZE, weights, distance);
+    }
+
+    public String getName() {
+        return name;
     }
 }

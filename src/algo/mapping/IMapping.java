@@ -16,5 +16,7 @@ public interface IMapping {
 
     List<Pair<Order, IOperation>> getNeighborsExceptOperations(final Order order, final List<IOperation> exceptOperations);
 
-//    List<IOperation> getOperations(final Order order);
+    int hashCode();
+
+    boolean equals(Object obj);
 }

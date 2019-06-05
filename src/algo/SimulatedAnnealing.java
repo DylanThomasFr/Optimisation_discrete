@@ -1,13 +1,13 @@
 package algo;
 
-import algo.mapping.MPermutation;
+import algo.mapping.IMapping;
 import javafx.util.Pair;
 import utils.Landscape;
 import utils.Order;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
-import java.util.function.Function;
 
 public class SimulatedAnnealing implements IAlgo {
 
@@ -16,13 +16,14 @@ public class SimulatedAnnealing implements IAlgo {
     private final int movesByTemperature;
 
     private Random rand = new Random();
-    private MPermutation mapping = new MPermutation();
+    private final IMapping mapping;
 
-    public SimulatedAnnealing(final float mu, final int movesByTemperature) {
-        this(mu, movesByTemperature,null);
+    public SimulatedAnnealing(final IMapping mapping, final float mu, final int movesByTemperature) {
+        this(mapping, mu, movesByTemperature,null);
     }
 
-    public SimulatedAnnealing(final float mu, final int movesByTemperature, final Order initialSolution){
+    public SimulatedAnnealing(final IMapping mapping, final float mu, final int movesByTemperature, final Order initialSolution){
+        this.mapping = mapping;
         this.mu = mu;
         this.initialSolution = initialSolution;
         this.movesByTemperature = movesByTemperature;
@@ -30,6 +31,7 @@ public class SimulatedAnnealing implements IAlgo {
 
     @Override
     public Order compute(Landscape landscape) {
+        System.out.println("Compute "+this.toString());
         Order currentSolution;
         if(initialSolution == null){
             currentSolution = new Order(landscape.getSIZE());
@@ -90,5 +92,29 @@ public class SimulatedAnnealing implements IAlgo {
 
     private int getTemperatureChanges(final float deltaFitness, float temperature0, final double proba){
         return (int) (Math.log(-deltaFitness / (temperature0 * Math.log(proba))) / Math.log(mu)) + 1;
+    }
+
+    @Override
+    public String toString() {
+        return "SimulatedAnnealing."+mapping+
+                ".mu."+mu+
+                ".movesByTemperature."+movesByTemperature+
+                ".initialSolution."+(initialSolution == null ? "false" : "true");
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                "SimulatedAnnealing",
+                mapping,
+                mu,
+                movesByTemperature,
+                initialSolution
+        );
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj.hashCode() == this.hashCode();
     }
 }

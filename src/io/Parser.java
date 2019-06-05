@@ -24,6 +24,7 @@ public class Parser {
             part2 += parts[i] + "\r\n";
         }
         return new Landscape(
+                url,
                 size,
                 formatArray(size, part1),
                 formatArray(size, part2)

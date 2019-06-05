@@ -2,6 +2,8 @@ import algo.HillClimbing;
 import algo.RandomWalk;
 import algo.SimulatedAnnealing;
 import algo.TabuSearch;
+import algo.mapping.MPermutation;
+import benchmark.Benchmark;
 import io.Parser;
 import utils.Landscape;
 import utils.Order;
@@ -9,16 +11,34 @@ import utils.Order;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+
+        MPermutation mapping = new MPermutation();
+
+        Benchmark benchmark = new Benchmark(2, 4);
+        benchmark.registerLandscape(Parser.createLandscape("data/tai12a.dat").setBestFitness(224416L));
+        benchmark.registerLandscape(Parser.createLandscape("data/tai20a.dat").setBestFitness(703482L));
+        for (int i = 1; i < 100000; i *= 2) {
+            benchmark.registerAlgo(new RandomWalk(mapping, i));
+        }
+        for (int i = 1; i < 145; i += 1) {
+            benchmark.registerAlgo(new HillClimbing(mapping, i));
+        }
+        benchmark.runBench();
+
+
+
+
 //        Landscape landscape = Parser.createLandscape("data/tai12a.dat");
 //        Order solutionOrder = new Order("8,1,6,2,11,10,3,5,9,7,12,4");
 
 
-        Landscape landscape = Parser.createLandscape("data/tai20a.dat");
-        Order solutionOrder = new Order("10,9,12,20,19,3,14,6,17,11,5,7,15,16,18,2,4,8,13,1");
-
-
-        long bestSolutionFitness = landscape.computeFitness(solutionOrder);
-        System.out.println("bestSolutionFitness = " + bestSolutionFitness);
+//        Landscape landscape = Parser.createLandscape("data/tai40a.dat");
+//        System.out.println("landscape = " + landscape);
+//        Order solutionOrder = new Order("8,16,14,17,4,11,3,19,7,9,1,15,6,13,10,2,5,20,18,12");
+//
+//
+//        long bestSolutionFitness = landscape.computeFitness(solutionOrder);
+//        System.out.println("bestSolutionFitness = " + bestSolutionFitness);
 
 //        RandomWalk randomWalk = new RandomWalk(10000);
 //        Order bestComputedOrder = randomWalk.compute(landscape);
@@ -26,11 +46,11 @@ public class Main {
 //        long bestComputedFitness = landscape.computeFitness(bestComputedOrder);
 //        System.out.println("bestComputedFitness = " + bestComputedFitness);
 
-        HillClimbing hillClimbing = new HillClimbing();
-        Order bestComputedOrder = hillClimbing.compute(landscape);
-        System.out.println("bestComputedOrder = " + bestComputedOrder);
-        long bestComputedFitness = landscape.computeFitness(bestComputedOrder);
-        System.out.println("bestComputedFitness = " + bestComputedFitness);
+//        HillClimbing hillClimbing = new HillClimbing();
+//        Order bestComputedOrder = hillClimbing.compute(landscape);
+//        System.out.println("bestComputedOrder = " + bestComputedOrder);
+//        long bestComputedFitness = landscape.computeFitness(bestComputedOrder);
+//        System.out.println("bestComputedFitness = " + bestComputedFitness);
 
 
 //        SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing( 0.999F, 100);

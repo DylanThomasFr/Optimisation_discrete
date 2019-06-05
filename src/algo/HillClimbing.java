@@ -1,32 +1,35 @@
 package algo;
 
-import algo.mapping.MPermutation;
+import algo.mapping.IMapping;
 import utils.Landscape;
 import utils.Order;
 
-import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class HillClimbing implements IAlgo {
 
     private Random rand = new Random();
-    private int numberOfIterations;
-    private MPermutation mapping = new MPermutation();
+    private final int numberOfIterations;
+    private final IMapping mapping;
 
-    public HillClimbing(int numberOfIterations){
+    public HillClimbing(final IMapping mapping, final int numberOfIterations){
+        this.mapping = mapping;
         this.numberOfIterations = numberOfIterations;
     }
 
-    public HillClimbing(){
-        this.numberOfIterations = 0;
+    public HillClimbing(final IMapping mapping){
+        this(mapping, 0);
     }
 
     @Override
     public Order compute(Landscape landscape) {
-        if(numberOfIterations == 0){
-            numberOfIterations = 2 * landscape.getSIZE() * landscape.getSIZE();
+        System.out.println("Compute "+this.toString());
+        int numberOfIterationsToRun = numberOfIterations;
+        if(numberOfIterationsToRun == 0){
+            numberOfIterationsToRun = 2 * landscape.getSIZE() * landscape.getSIZE();
         } else {
-            if(numberOfIterations > landscape.getSIZE() * landscape.getSIZE())
+            if(numberOfIterationsToRun > landscape.getSIZE() * landscape.getSIZE())
                 System.out.printf(
                         "numberOfIterations very big : %d/%d%n",
                         numberOfIterations,
@@ -38,7 +41,7 @@ public class HillClimbing implements IAlgo {
         Order randomSolution = new Order(landscape.getSIZE());
 
         long bestFitness = Long.MAX_VALUE;
-        for (int i = 0; i < numberOfIterations; i++) {
+        for (int i = 0; i < numberOfIterationsToRun; i++) {
             bestLocalSolution = hillClimbingAlgo(landscape, randomSolution.shuffle());
             long fitness = landscape.computeFitness(bestLocalSolution);
             if(fitness < bestFitness){
@@ -67,5 +70,25 @@ public class HillClimbing implements IAlgo {
                 break;
         }
         return bestSolution;
+    }
+
+    @Override
+    public String toString() {
+        return "HillClimbing." + mapping+
+                ".numberOfIterations."+numberOfIterations;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                "HillClimbing",
+                mapping,
+                numberOfIterations
+        );
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj.hashCode() == this.hashCode();
     }
 }

@@ -1,6 +1,6 @@
 package algo;
 
-import algo.mapping.MPermutation;
+import algo.mapping.IMapping;
 import algo.operation.IOperation;
 import algo.operation.ONoChangeOperation;
 import javafx.util.Pair;
@@ -9,15 +9,17 @@ import utils.Order;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Queue;
 
 public class TabuSearch implements IAlgo {
 
     private final int maxSteps;
     private final int tabouSize;
-    private MPermutation mapping = new MPermutation();
+    private final IMapping mapping;
 
-    public TabuSearch(int maxSteps, final int tabouSize){
+    public TabuSearch(final IMapping mapping, final int maxSteps, final int tabouSize){
+        this.mapping = mapping;
         this.maxSteps = maxSteps;
         this.tabouSize = tabouSize;
     }
@@ -28,6 +30,7 @@ public class TabuSearch implements IAlgo {
     }
 
     public Order compute(Landscape landscape, Order initialSolution){
+        System.out.println("Compute "+this.toString());
         Order bestSolution = initialSolution.clone();
         long bestFitness = landscape.computeFitness(bestSolution);
 
@@ -69,5 +72,27 @@ public class TabuSearch implements IAlgo {
         if(tabouList.size() >= tabouSize)
             tabouList.poll();
         tabouList.add(iOperation);
+    }
+
+    @Override
+    public String toString() {
+        return "TabuSearch."+mapping+
+                ".maxSteps."+maxSteps+
+                ".tabouSize."+tabouSize;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                "TabuSearch",
+                mapping,
+                maxSteps,
+                tabouSize
+        );
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj.hashCode() == this.hashCode();
     }
 }
