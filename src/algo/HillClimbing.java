@@ -4,6 +4,8 @@ import algo.mapping.IMapping;
 import utils.Landscape;
 import utils.Order;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
@@ -11,20 +13,22 @@ public class HillClimbing implements IAlgo {
 
     private Random rand = new Random();
     private final int numberOfIterations;
+    private final double percentOfNeighbors;
     private final IMapping mapping;
 
-    public HillClimbing(final IMapping mapping, final int numberOfIterations){
+    public HillClimbing(final IMapping mapping, final double percentOfNeighbors, final int numberOfIterations){
         this.mapping = mapping;
         this.numberOfIterations = numberOfIterations;
+        this.percentOfNeighbors = percentOfNeighbors;
     }
 
-    public HillClimbing(final IMapping mapping){
-        this(mapping, 0);
+    public HillClimbing(final IMapping mapping, final double percentOfNeighbors){
+        this(mapping, percentOfNeighbors, 0);
     }
 
     @Override
     public Order compute(Landscape landscape) {
-        System.out.println("Compute "+this.toString());
+        System.out.println("Compute "+landscape.getName()+" with "+this.toString());
         int numberOfIterationsToRun = numberOfIterations;
         if(numberOfIterationsToRun == 0){
             numberOfIterationsToRun = 2 * landscape.getSIZE() * landscape.getSIZE();
@@ -56,17 +60,26 @@ public class HillClimbing implements IAlgo {
         long bestFitness = landscape.computeFitness(startingSolution);
         Order bestSolution = startingSolution;
         boolean thereIsBest;
-        while(true) {
-            thereIsBest = false;
-            for (Order solution : mapping.getNeighbors(bestSolution)) {
+
+        Integer landscapeSize = 2 * landscape.getSIZE();
+        while(landscapeSize-- >= 0) {
+            List<Order> neighbors = mapping.getNeighbors(bestSolution);
+            Collections.shuffle(neighbors);
+            int max = (int) (neighbors.size() * percentOfNeighbors) + 1;
+
+            boolean thereisNoBest = true;
+            for (Order solution : neighbors) {
+                if(max-- == 0){
+                    break;
+                }
                 long fitness = landscape.computeFitness(solution);
                 if(fitness < bestFitness){
                     bestSolution = solution.clone();
                     bestFitness = fitness;
-                    thereIsBest = true;
+                    thereisNoBest = false;
                 }
             }
-            if(!thereIsBest)
+            if(thereisNoBest)
                 break;
         }
         return bestSolution;

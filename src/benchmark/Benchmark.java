@@ -1,16 +1,16 @@
 package benchmark;
 
 import algo.IAlgo;
-import algo.mapping.IMapping;
 import io.BenchResultWriter;
-import javafx.util.Pair;
 import utils.Landscape;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Benchmark {
 
@@ -20,6 +20,7 @@ public class Benchmark {
     private HashSet<IAlgo> algos;
 
     private HashMap<Landscape, HashMap<IAlgo, Float>> results;
+    private HashMap<Landscape, HashMap<IAlgo, Long>> timeResults;
 
     public Benchmark(final int threadNb, final int avgIter){
         this.threadNb = threadNb;
@@ -27,6 +28,7 @@ public class Benchmark {
         landscapes = new HashSet<>();
         algos = new HashSet<>();
         results = new HashMap<>();
+        timeResults = new HashMap<>();
     }
 
     public Benchmark registerLandscape(Landscape landscape){
@@ -39,11 +41,13 @@ public class Benchmark {
         return this;
     }
 
-    public void runBench(){
+    public Benchmark runBench(){
         for (Landscape lanscape : landscapes) {
             results.put(lanscape, new HashMap<>());
+            timeResults.put(lanscape, new HashMap<>());
             for (IAlgo algo : algos) {
                 results.get(lanscape).put(algo, 0F);
+                timeResults.get(lanscape).put(algo, 0L);
             }
         }
 
@@ -57,16 +61,17 @@ public class Benchmark {
 
         for (Landscape lanscape : landscapes) {
             for (IAlgo algo : algos) {
-                System.out.println("results("+lanscape.getName()+")("+algo+") " + results.get(lanscape).get(algo));
+                System.out.println("results("+lanscape.getName()+")("+algo+") " + results.get(lanscape).get(algo) + " in " + timeResults.get(lanscape).get(algo));
             }
         }
+        return this;
     }
 
     public Benchmark writeOut(BenchResultWriter benchResultWriter){
         List<String> lines = new ArrayList<>();
         for (Landscape lanscape : landscapes) {
             for (IAlgo algo : algos) {
-                lines.add(lanscape.getName()+","+algo+","+results.get(lanscape).get(algo));
+                lines.add(lanscape.getName()+","+algo+","+results.get(lanscape).get(algo)+","+timeResults.get(lanscape).get(algo));
             }
         }
         benchResultWriter.write(lines);
@@ -82,6 +87,7 @@ public class Benchmark {
                                 landscape,
                                 algo,
                                 results,
+                                timeResults,
                                 avgIter
                                 )
                 );
