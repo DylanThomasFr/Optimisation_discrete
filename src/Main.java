@@ -12,7 +12,7 @@ import utils.Landscape;
 
 public class Main {
 
-    private static final int THREAD_NB = 2;
+    private static final int THREAD_NB = 96;
     private static final int AVERAGE_ITERATION = 4;
 
     static Landscape tai12a;
@@ -95,7 +95,7 @@ public class Main {
         benchmark.registerLandscape(tai60a);
         benchmark.registerLandscape(tai80a);
         benchmark.registerLandscape(tai100a);
-        for (int i = 1; i < 100001; i *= 10) {
+        for (int i = 1; i < 10001; i *= 10) {
             benchmark.registerAlgo(new RandomWalk(mapping, i));
         }
         return benchmark;
