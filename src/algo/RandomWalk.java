@@ -12,9 +12,9 @@ public class RandomWalk implements IAlgo {
 
     private Random rand = new Random();
     private final int numberOfIterations;
-    private IMapping mapping;
+    private final IMapping mapping;
 
-    public RandomWalk(IMapping mapping, final int numberOfIterations){
+    public RandomWalk(final IMapping mapping, final int numberOfIterations){
         this.mapping = mapping;
         this.numberOfIterations = numberOfIterations;
     }
@@ -36,12 +36,6 @@ public class RandomWalk implements IAlgo {
             }
         }
         return bestSolution;
-    }
-
-    @Override
-    public IAlgo setMappingStrategy(IMapping mapping) {
-        this.mapping = mapping;
-        return this;
     }
 
     @Override

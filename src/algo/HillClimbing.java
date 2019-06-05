@@ -11,14 +11,14 @@ public class HillClimbing implements IAlgo {
 
     private Random rand = new Random();
     private final int numberOfIterations;
-    private IMapping mapping;
+    private final IMapping mapping;
 
-    public HillClimbing(IMapping mapping, final int numberOfIterations){
+    public HillClimbing(final IMapping mapping, final int numberOfIterations){
         this.mapping = mapping;
         this.numberOfIterations = numberOfIterations;
     }
 
-    public HillClimbing(IMapping mapping){
+    public HillClimbing(final IMapping mapping){
         this(mapping, 0);
     }
 
@@ -69,12 +69,6 @@ public class HillClimbing implements IAlgo {
                 break;
         }
         return bestSolution;
-    }
-
-    @Override
-    public IAlgo setMappingStrategy(IMapping mapping) {
-        this.mapping = mapping;
-        return this;
     }
 
     @Override

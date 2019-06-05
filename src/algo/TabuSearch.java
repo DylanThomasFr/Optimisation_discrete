@@ -16,9 +16,9 @@ public class TabuSearch implements IAlgo {
 
     private final int maxSteps;
     private final int tabouSize;
-    private IMapping mapping;
+    private final IMapping mapping;
 
-    public TabuSearch(IMapping mapping, final int maxSteps, final int tabouSize){
+    public TabuSearch(final IMapping mapping, final int maxSteps, final int tabouSize){
         this.mapping = mapping;
         this.maxSteps = maxSteps;
         this.tabouSize = tabouSize;
@@ -71,12 +71,6 @@ public class TabuSearch implements IAlgo {
         if(tabouList.size() >= tabouSize)
             tabouList.poll();
         tabouList.add(iOperation);
-    }
-
-    @Override
-    public IAlgo setMappingStrategy(IMapping mapping) {
-        this.mapping = mapping;
-        return this;
     }
 
     @Override

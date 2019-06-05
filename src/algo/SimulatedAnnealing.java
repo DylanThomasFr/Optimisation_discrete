@@ -16,13 +16,13 @@ public class SimulatedAnnealing implements IAlgo {
     private final int movesByTemperature;
 
     private Random rand = new Random();
-    private IMapping mapping;
+    private final IMapping mapping;
 
-    public SimulatedAnnealing(IMapping mapping, final float mu, final int movesByTemperature) {
+    public SimulatedAnnealing(final IMapping mapping, final float mu, final int movesByTemperature) {
         this(mapping, mu, movesByTemperature,null);
     }
 
-    public SimulatedAnnealing(IMapping mapping, final float mu, final int movesByTemperature, final Order initialSolution){
+    public SimulatedAnnealing(final IMapping mapping, final float mu, final int movesByTemperature, final Order initialSolution){
         this.mapping = mapping;
         this.mu = mu;
         this.initialSolution = initialSolution;
@@ -73,12 +73,6 @@ public class SimulatedAnnealing implements IAlgo {
             temperature = mu * temperature;
         }
         return bestSolution;
-    }
-
-    @Override
-    public IAlgo setMappingStrategy(IMapping mapping) {
-        this.mapping = mapping;
-        return this;
     }
 
     private Pair<Float, Integer> processTemperature0(Landscape landscape, Order initialSolution, final double probaChances){
