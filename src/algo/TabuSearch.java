@@ -30,7 +30,7 @@ public class TabuSearch implements IAlgo {
     }
 
     public Order compute(Landscape landscape, Order initialSolution){
-        System.out.println("Compute "+this.toString());
+        System.out.println("Compute "+landscape.getName()+" with "+this.toString());
         Order bestSolution = initialSolution.clone();
         long bestFitness = landscape.computeFitness(bestSolution);
 
@@ -40,6 +40,9 @@ public class TabuSearch implements IAlgo {
         List<Pair<Order, IOperation>> neighbors;
         for (int i = 0; i < maxSteps; i++) {
             neighbors = mapping.getNeighborsExceptOperations(currentSolution, (List) tabouList);
+            if(neighbors.isEmpty()){
+                break;
+            }
             long newBestFitness = Long.MAX_VALUE;
             Order newBestSolution = currentSolution.clone();
             IOperation reverseOperation = new ONoChangeOperation();

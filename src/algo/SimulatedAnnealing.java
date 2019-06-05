@@ -31,7 +31,7 @@ public class SimulatedAnnealing implements IAlgo {
 
     @Override
     public Order compute(Landscape landscape) {
-        System.out.println("Compute "+this.toString());
+        System.out.println("Compute "+landscape.getName()+" with "+this.toString());
         Order currentSolution;
         if(initialSolution == null){
             currentSolution = new Order(landscape.getSIZE());
@@ -46,9 +46,6 @@ public class SimulatedAnnealing implements IAlgo {
         Order nextSolution;
         int maxChangesOfTemperature = startingPoints.getValue();
         float temperature = startingPoints.getKey();
-
-        System.out.println("maxChangesOfTemperature = " + maxChangesOfTemperature);
-        System.out.println("temperature = " + temperature);
 
         for (int k = 0; k < maxChangesOfTemperature; k++) {
             for (int l = 1; l < movesByTemperature; l++) {

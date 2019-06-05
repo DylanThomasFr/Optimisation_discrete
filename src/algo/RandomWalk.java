@@ -21,7 +21,7 @@ public class RandomWalk implements IAlgo {
 
     @Override
     public Order compute(Landscape landscape) {
-        System.out.println("Compute "+this.toString());
+        System.out.println("Compute "+landscape.getName()+" with "+this.toString());
         Order solution = new Order(landscape.getSIZE());
         Order bestSolution = solution.clone();
 
