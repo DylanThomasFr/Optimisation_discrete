@@ -1,24 +1,24 @@
 package algo;
 
-import algo.mapping.MPermutation;
+import algo.mapping.IMapping;
 import utils.Landscape;
 import utils.Order;
 
-import java.util.List;
 import java.util.Random;
 
 public class HillClimbing implements IAlgo {
 
     private Random rand = new Random();
     private int numberOfIterations;
-    private MPermutation mapping = new MPermutation();
+    private IMapping mapping;
 
-    public HillClimbing(int numberOfIterations){
+    public HillClimbing(IMapping mapping, int numberOfIterations){
+        this.mapping = mapping;
         this.numberOfIterations = numberOfIterations;
     }
 
-    public HillClimbing(){
-        this.numberOfIterations = 0;
+    public HillClimbing(IMapping mapping){
+        this(mapping, 0);
     }
 
     @Override
@@ -67,5 +67,11 @@ public class HillClimbing implements IAlgo {
                 break;
         }
         return bestSolution;
+    }
+
+    @Override
+    public IAlgo setMappingStrategy(IMapping mapping) {
+        this.mapping = mapping;
+        return this;
     }
 }

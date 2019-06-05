@@ -1,6 +1,6 @@
 package algo;
 
-import algo.mapping.MPermutation;
+import algo.mapping.IMapping;
 import algo.operation.IOperation;
 import algo.operation.ONoChangeOperation;
 import javafx.util.Pair;
@@ -15,9 +15,10 @@ public class TabuSearch implements IAlgo {
 
     private final int maxSteps;
     private final int tabouSize;
-    private MPermutation mapping = new MPermutation();
+    private IMapping mapping;
 
-    public TabuSearch(int maxSteps, final int tabouSize){
+    public TabuSearch(IMapping mapping, int maxSteps, final int tabouSize){
+        this.mapping = mapping;
         this.maxSteps = maxSteps;
         this.tabouSize = tabouSize;
     }
@@ -69,5 +70,11 @@ public class TabuSearch implements IAlgo {
         if(tabouList.size() >= tabouSize)
             tabouList.poll();
         tabouList.add(iOperation);
+    }
+
+    @Override
+    public IAlgo setMappingStrategy(IMapping mapping) {
+        this.mapping = mapping;
+        return this;
     }
 }

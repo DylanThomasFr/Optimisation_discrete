@@ -1,6 +1,6 @@
 package algo;
 
-import algo.mapping.MPermutation;
+import algo.mapping.IMapping;
 import utils.Landscape;
 import utils.Order;
 
@@ -11,9 +11,10 @@ public class RandomWalk implements IAlgo {
 
     private Random rand = new Random();
     private final int numberOfIterations;
-    private MPermutation mapping = new MPermutation();
+    private IMapping mapping;
 
-    public RandomWalk(final int numberOfIterations){
+    public RandomWalk(IMapping mapping, final int numberOfIterations){
+        this.mapping = mapping;
         this.numberOfIterations = numberOfIterations;
     }
 
@@ -34,5 +35,11 @@ public class RandomWalk implements IAlgo {
             }
         }
         return bestSolution;
+    }
+
+    @Override
+    public IAlgo setMappingStrategy(IMapping mapping) {
+        this.mapping = mapping;
+        return this;
     }
 }
