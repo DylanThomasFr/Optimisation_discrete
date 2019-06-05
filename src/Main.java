@@ -4,15 +4,15 @@ import algo.SimulatedAnnealing;
 import algo.TabuSearch;
 import algo.mapping.IMapping;
 import algo.mapping.MPermutation;
+import algo.mapping.MSwapping;
 import benchmark.Benchmark;
 import io.BenchResultWriter;
 import io.Parser;
 import utils.Landscape;
-import utils.Order;
 
 public class Main {
 
-    private static final int THREAD_NB = 2;
+    private static final int THREAD_NB = 96;
     private static final int AVERAGE_ITERATION = 4;
 
     static Landscape tai12a;
@@ -32,6 +32,7 @@ public class Main {
 
 
         MPermutation mapping = new MPermutation();
+//        MSwapping mapping = new MSwapping();
 
         tai12a = Parser.createLandscape("data","tai12a.dat").setBestFitness(224416);
         tai15a = Parser.createLandscape("data","tai15a.dat").setBestFitness(388214);
@@ -47,55 +48,37 @@ public class Main {
         tai100a = Parser.createLandscape("data","tai100a.dat").setBestFitness(21044752);
 
 
-//        benchmarkRandomLogOverAll(mapping)
-//                .runBench()
-//                .writeOut(new BenchResultWriter("out", "benchmarkRandomLogOverAll"));
-//
-//        benchmarkHillClimbingSmallOnes(mapping)
-//                .runBench()
-//                .writeOut(new BenchResultWriter("out", "benchmarkHillClimbingSmallOnes"));
-//
-//        benchmarkHillClimbingBigOnes(mapping)
-//                .runBench()
-//                .writeOut(new BenchResultWriter("out", "benchmarkHillClimbingBigOnes"));
+        benchmarkRandomLogOverAll(mapping)
+                .runBench()
+                .writeOut(new BenchResultWriter("out", "benchmarkRandomLogOverAll"));
 
-//        benchmarkSimulatedAnnealingMuX(mapping, 0.5F)
-//                .runBench()
-//                .writeOut(new BenchResultWriter("out", "benchmarkSimulatedAnnealingMu050"));
-//        benchmarkSimulatedAnnealingMuX(mapping, 0.8F)
-//                .runBench()
-//                .writeOut(new BenchResultWriter("out", "benchmarkSimulatedAnnealingMu080"));
-//        benchmarkSimulatedAnnealingMuX(mapping, 0.9F)
-//                .runBench()
-//                .writeOut(new BenchResultWriter("out", "benchmarkSimulatedAnnealingMu090"));
-//        benchmarkSimulatedAnnealingMuX(mapping, 0.95F)
-//                .runBench()
-//                .writeOut(new BenchResultWriter("out", "benchmarkSimulatedAnnealingMu095"));
-//        benchmarkSimulatedAnnealingMuX(mapping, 0.99F)
-//                .runBench()
-//                .writeOut(new BenchResultWriter("out", "benchmarkSimulatedAnnealingMu099"));
+        benchmarkHillClimbingSmallOnes(mapping)
+                .runBench()
+                .writeOut(new BenchResultWriter("out", "benchmarkHillClimbingSmallOnes"));
 
+        benchmarkHillClimbingBigOnes(mapping)
+                .runBench()
+                .writeOut(new BenchResultWriter("out", "benchmarkHillClimbingBigOnes"));
+
+        benchmarkSimulatedAnnealingMuX(mapping, 0.5F)
+                .runBench()
+                .writeOut(new BenchResultWriter("out", "benchmarkSimulatedAnnealingMu050"));
+        benchmarkSimulatedAnnealingMuX(mapping, 0.8F)
+                .runBench()
+                .writeOut(new BenchResultWriter("out", "benchmarkSimulatedAnnealingMu080"));
+        benchmarkSimulatedAnnealingMuX(mapping, 0.9F)
+                .runBench()
+                .writeOut(new BenchResultWriter("out", "benchmarkSimulatedAnnealingMu090"));
+        benchmarkSimulatedAnnealingMuX(mapping, 0.95F)
+                .runBench()
+                .writeOut(new BenchResultWriter("out", "benchmarkSimulatedAnnealingMu095"));
+        benchmarkSimulatedAnnealingMuX(mapping, 0.99F)
+                .runBench()
+                .writeOut(new BenchResultWriter("out", "benchmarkSimulatedAnnealingMu099"));
+//
         benchmarkTabou(mapping)
                 .runBench()
                 .writeOut(new BenchResultWriter("out", "benchmarkTabou"));
-
-
-//        for (int i = 1; i < 10; i += 1) {
-//            benchmark.registerAlgo(new HillClimbing(mapping, 0.05, i));
-//        }
-
-
-
-//        Benchmark benchmark2 = new Benchmark(2, 4);
-//        benchmark2.registerLandscape(Parser.createLandscape("data","tai12a.dat").setBestFitness(224416));
-//        BenchResultWriter benchResultWriter2 = new BenchResultWriter("out", "test10");
-//        for (int i = 1; i < 100000; i *= 10) {
-//            benchmark2.registerAlgo(new RandomWalk(mapping, i));
-//        }
-//        benchmark2.runBench();
-//        benchmark2.writeOut(benchResultWriter2);
-
-
     }
 
     public static Benchmark benchmarkRandomLogOverAll(IMapping mapping) {
@@ -112,7 +95,7 @@ public class Main {
         benchmark.registerLandscape(tai60a);
         benchmark.registerLandscape(tai80a);
         benchmark.registerLandscape(tai100a);
-        for (int i = 1; i < 100001; i *= 10) {
+        for (int i = 1; i < 10001; i *= 10) {
             benchmark.registerAlgo(new RandomWalk(mapping, i));
         }
         return benchmark;
@@ -127,6 +110,9 @@ public class Main {
         benchmark.registerLandscape(tai25a);
         benchmark.registerLandscape(tai30a);
         for (int i = 1; i < 30; i += 1) {
+            benchmark.registerAlgo(new HillClimbing(mapping, 1, i));
+        }
+        for (int i = 30; i < 100 +1; i += 10) {
             benchmark.registerAlgo(new HillClimbing(mapping, 1, i));
         }
         return benchmark;
@@ -175,25 +161,25 @@ public class Main {
 
     public static Benchmark benchmarkTabou(IMapping mapping) {
         Benchmark benchmark = new Benchmark(THREAD_NB, AVERAGE_ITERATION);
-//        benchmark.registerLandscape(tai12a);
-//        benchmark.registerLandscape(tai15a);
-//        benchmark.registerLandscape(tai17a);
-//        benchmark.registerLandscape(tai20a);
-//        benchmark.registerLandscape(tai25a);
-//        benchmark.registerLandscape(tai30a);
-//        benchmark.registerLandscape(tai35a);
-//        benchmark.registerLandscape(tai40a);
-//        benchmark.registerLandscape(tai50a);
-//        benchmark.registerLandscape(tai60a);
-//        benchmark.registerLandscape(tai80a);
+        benchmark.registerLandscape(tai12a);
+        benchmark.registerLandscape(tai15a);
+        benchmark.registerLandscape(tai17a);
+        benchmark.registerLandscape(tai20a);
+        benchmark.registerLandscape(tai25a);
+        benchmark.registerLandscape(tai30a);
+        benchmark.registerLandscape(tai35a);
+        benchmark.registerLandscape(tai40a);
+        benchmark.registerLandscape(tai50a);
+        benchmark.registerLandscape(tai60a);
+        benchmark.registerLandscape(tai80a);
         benchmark.registerLandscape(tai100a);
         for (int tabouSize = 1; tabouSize < 10; tabouSize += 1) {
-            for (int maxSteps = 10; maxSteps < 100000 + 1; maxSteps *= 10) {
+            for (int maxSteps = 10; maxSteps < 10000 + 1; maxSteps *= 10) {
                 benchmark.registerAlgo(new TabuSearch(mapping, maxSteps, tabouSize));
             }
         }
         for (int tabouSize = 10; tabouSize < 101; tabouSize += 10) {
-            for (int maxSteps = 10; maxSteps < 100000 + 1; maxSteps *= 10) {
+            for (int maxSteps = 10; maxSteps < 10000 + 1; maxSteps *= 10) {
                 benchmark.registerAlgo(new TabuSearch(mapping, maxSteps, tabouSize));
             }
         }
