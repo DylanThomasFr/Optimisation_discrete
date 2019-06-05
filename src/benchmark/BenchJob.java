@@ -9,13 +9,13 @@ public class BenchJob implements Runnable{
 
     private final Landscape landscape;
     private final IAlgo algo;
-    private final HashMap<Landscape, HashMap<IAlgo, Long>> returnFitness;
+    private final HashMap<Landscape, HashMap<IAlgo, Float>> returnFitness;
     private final int avgIter;
 
     public BenchJob(
             final Landscape landscape,
             final IAlgo algo,
-            final HashMap<Landscape, HashMap<IAlgo, Long>> returnFitness,
+            final HashMap<Landscape, HashMap<IAlgo, Float>> returnFitness,
             int avgIter
             ){
         this.landscape = landscape;
@@ -31,6 +31,6 @@ public class BenchJob implements Runnable{
             fitness+= landscape.computeFitness(algo.compute(landscape));
         }
         fitness = Math.round(fitness / avgIter);
-        returnFitness.get(landscape).put(algo, fitness);
+        returnFitness.get(landscape).put(algo, (float) fitness / landscape.getBestFitness());
     }
 }
