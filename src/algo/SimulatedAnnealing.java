@@ -103,10 +103,10 @@ public class SimulatedAnnealing implements IAlgo {
         return "SimulatedAnnealing,"+mapping+
                 ",mu,"+mu+
                 ",movesByTemperature,"+movesByTemperature+
-                ",initialSolution,"+(initialSolution == null ? "0" : "1" +
+                ",initialSolution,"+(initialSolution == null ? "0" : "1") +
                 ",proboAcceptBadSolutions,"+proboAcceptBadSolutions+
                 ",probaAcceptThatBadSolution,"+probaAcceptThatBadSolution
-        );
+        ;
     }
 
     @Override
