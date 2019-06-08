@@ -116,7 +116,9 @@ public class SimulatedAnnealing implements IAlgo {
                 mapping,
                 mu,
                 movesByTemperature,
-                initialSolution
+                initialSolution,
+                proboAcceptBadSolutions,
+                probaAcceptThatBadSolution
         );
     }
 
