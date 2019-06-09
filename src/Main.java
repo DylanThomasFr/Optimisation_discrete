@@ -10,6 +10,9 @@ import io.BenchResultWriter;
 import io.Parser;
 import utils.Landscape;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
 
     private static final int THREAD_NB = 96;
@@ -60,21 +63,9 @@ public class Main {
                 .runBench()
                 .writeOut(new BenchResultWriter("out", "benchmarkHillClimbingBigOnes"));
 
-        benchmarkSimulatedAnnealingMuX(mapping, 0.5F)
+        benchmarkSimulatedAnnealingMuX(mapping)
                 .runBench()
-                .writeOut(new BenchResultWriter("out", "benchmarkSimulatedAnnealingMu050"));
-        benchmarkSimulatedAnnealingMuX(mapping, 0.8F)
-                .runBench()
-                .writeOut(new BenchResultWriter("out", "benchmarkSimulatedAnnealingMu080"));
-        benchmarkSimulatedAnnealingMuX(mapping, 0.9F)
-                .runBench()
-                .writeOut(new BenchResultWriter("out", "benchmarkSimulatedAnnealingMu090"));
-        benchmarkSimulatedAnnealingMuX(mapping, 0.95F)
-                .runBench()
-                .writeOut(new BenchResultWriter("out", "benchmarkSimulatedAnnealingMu095"));
-        benchmarkSimulatedAnnealingMuX(mapping, 0.99F)
-                .runBench()
-                .writeOut(new BenchResultWriter("out", "benchmarkSimulatedAnnealingMu099"));
+                .writeOut(new BenchResultWriter("out", "benchmarkSimulatedAnnealingY"));
 //
         benchmarkTabou(mapping)
                 .runBench()
@@ -139,7 +130,7 @@ public class Main {
     }
 
 
-    public static Benchmark benchmarkSimulatedAnnealingMuX(IMapping mapping, Float mu) {
+    public static Benchmark benchmarkSimulatedAnnealingMuX(IMapping mapping) {
         Benchmark benchmark = new Benchmark(THREAD_NB, AVERAGE_ITERATION);
         benchmark.registerLandscape(tai12a);
         benchmark.registerLandscape(tai15a);
@@ -153,8 +144,35 @@ public class Main {
         benchmark.registerLandscape(tai60a);
         benchmark.registerLandscape(tai80a);
         benchmark.registerLandscape(tai100a);
-        for (int i = 1; i < 8192 + 1; i *= 2) {
-            benchmark.registerAlgo(new SimulatedAnnealing(mapping, mu, i));
+        List<Float> mus = new ArrayList<>();
+        mus.add(0.5F);
+        mus.add(0.8F);
+        mus.add(0.9F);
+        mus.add(0.95F);
+        mus.add(0.99F);
+
+        List<Float> proboAcceptBadSolutions = new ArrayList<>();
+        for (int i = 1; i < 10 ; i++) {
+            proboAcceptBadSolutions.add(0.1F * i);
+        }
+        List<Float> probaAcceptThatBadSolutions = new ArrayList<>();
+        for (int i = 1; i < 10 ; i++) {
+            probaAcceptThatBadSolutions.add(0.01F * i);
+        }
+        for (int i = 1; i < 10 ; i++) {
+            probaAcceptThatBadSolutions.add(0.1F * i);
+        }
+        for (int i = 1; i < 1000 + 1; i += 100) {
+            for (Float mu : mus) {
+                for (Float proboAcceptBadSolution : proboAcceptBadSolutions) {
+                    for (Float probaAcceptThatBadSolution : probaAcceptThatBadSolutions) {
+                        benchmark.registerAlgo(
+                                new SimulatedAnnealing(mapping, mu, i, proboAcceptBadSolution, probaAcceptThatBadSolution)
+                        );
+                    }
+                }
+            }
+
         }
         return benchmark;
     }
