@@ -30,8 +30,14 @@ public class Main {
     static Landscape tai80a;
     static Landscape tai100a;
 
-    public static void main(String[] args) throws Exception {
+    /* ########################################################
+     *  #  Il est necessaire d'importer la librairie jfxrt.jar #
+     *  #  Pour permettre l'execution du code, située dans le  #
+     *  #  dossier /lib                                        #
+     *  ########################################################
+     */
 
+    public static void main(String[] args) throws Exception {
 
         MPermutation mapping = new MPermutation();
 //        MSwapping mapping = new MSwapping();
