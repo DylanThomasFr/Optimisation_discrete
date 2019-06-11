@@ -4,7 +4,6 @@ import algo.SimulatedAnnealing;
 import algo.TabuSearch;
 import algo.mapping.IMapping;
 import algo.mapping.MPermutation;
-import algo.mapping.MSwapping;
 import benchmark.Benchmark;
 import io.BenchResultWriter;
 import io.Parser;
@@ -15,7 +14,7 @@ import java.util.List;
 
 public class Main {
 
-    private static final int THREAD_NB = 96;
+    private static final int THREAD_NB = 4;
     private static final int AVERAGE_ITERATION = 4;
 
     static Landscape tai12a;
@@ -51,25 +50,32 @@ public class Main {
         tai100a = Parser.createLandscape("data","tai100a.dat").setBestFitness(21044752);
 
 
-        benchmarkRandomLogOverAll(mapping)
-                .runBench()
-                .writeOut(new BenchResultWriter("out", "benchmarkRandomLogOverAll"));
-
-        benchmarkHillClimbingSmallOnes(mapping)
-                .runBench()
-                .writeOut(new BenchResultWriter("out", "benchmarkHillClimbingSmallOnes"));
-
-        benchmarkHillClimbingBigOnes(mapping)
-                .runBench()
-                .writeOut(new BenchResultWriter("out", "benchmarkHillClimbingBigOnes"));
-
-        benchmarkSimulatedAnnealingMuX(mapping)
-                .runBench()
-                .writeOut(new BenchResultWriter("out", "benchmarkSimulatedAnnealingY"));
+        /* ########################################################
+        *  #  Ici se lance les algorithmes                        #
+        *  #  Certains peuvant vraiment prendre du temps          #
+        *  #  Il est préférable de réduire les différents tests   #
+        *  #  en réduisant le nombre à tester dans les boucles    #
+        *  ########################################################
+         */
+//        benchmarkRandomLogOverAll(mapping)
+//                .runBench()
+//                .writeOut(new BenchResultWriter("out", "benchmarkRandomLogOverAll"));
 //
-        benchmarkTabou(mapping)
-                .runBench()
-                .writeOut(new BenchResultWriter("out", "benchmarkTabou"));
+//        benchmarkHillClimbingSmallOnes(mapping)
+//                .runBench()
+//                .writeOut(new BenchResultWriter("out", "benchmarkHillClimbingSmallOnes"));
+//
+//        benchmarkHillClimbingBigOnes(mapping)
+//                .runBench()
+//                .writeOut(new BenchResultWriter("out", "benchmarkHillClimbingBigOnes"));
+//
+//        benchmarkSimulatedAnnealingY(mapping)
+//                .runBench()
+//                .writeOut(new BenchResultWriter("out", "benchmarkSimulatedAnnealingY"));
+//
+//        benchmarkTabou(mapping)
+//                .runBench()
+//                .writeOut(new BenchResultWriter("out", "benchmarkTabou"));
     }
 
     public static Benchmark benchmarkRandomLogOverAll(IMapping mapping) {
@@ -130,7 +136,7 @@ public class Main {
     }
 
 
-    public static Benchmark benchmarkSimulatedAnnealingMuX(IMapping mapping) {
+    public static Benchmark benchmarkSimulatedAnnealingY(IMapping mapping) {
         Benchmark benchmark = new Benchmark(THREAD_NB, AVERAGE_ITERATION);
         benchmark.registerLandscape(tai12a);
         benchmark.registerLandscape(tai15a);
