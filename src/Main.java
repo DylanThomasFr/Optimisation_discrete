@@ -15,7 +15,7 @@ import java.util.List;
 
 public class Main {
 
-    private static final int THREAD_NB = 96;
+    private static final int THREAD_NB = 4;
     private static final int AVERAGE_ITERATION = 4;
 
     static Landscape tai12a;
