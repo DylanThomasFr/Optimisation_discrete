@@ -2,6 +2,8 @@
 Projet d'optimisation discrète de 4ème année à Polytech Lyon
 
 
-### Remarques
+### Execution
 
-Dans une grille de Taillard, le premier paramètre définit le nombre d'équipement à placer sur n emplacement.
+Le programme se lance via la classe ``Main`` en java 8.
+
+Il est necessaire d'ajouter la librairie /lib/jfxrt.jar pour exécuter le code.
